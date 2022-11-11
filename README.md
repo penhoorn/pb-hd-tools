@@ -1,6 +1,6 @@
 ## Introduction
 
-Python scripts to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
+Python scripts to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an `--hd-finder` algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
 
 ### Disclaimer
 
@@ -22,7 +22,7 @@ Python libraries:
 
 ### Assumption
 
-__IMPORTANT!!!__ The scripts assume that reads are order by ZMW id. This means that two single stranded HiFi reads coming from a heteroduplex molecule in a single ZMW will be *neighbors*  (i.e., two consecutive records in either BAM or FASTQ.GZ input file). 
+__IMPORTANT!!!__ The heteroduplex count scripts assume that reads are order by ZMW id. This means that two single stranded HiFi reads coming from a heteroduplex molecule in a single ZMW will be *neighbors*  (i.e., two consecutive records in either BAM or FASTQ.GZ input file). 
 
 This is true for output files of PacBio computational tools, including:
 
@@ -31,7 +31,6 @@ This is true for output files of PacBio computational tools, including:
 * [_ccs_](https://ccs.how/) and [_extracthifi_](https://github.com/PacificBiosciences/extracthifi/) tools from PacBio's [Bioconda repository](https://github.com/PacificBiosciences/pbbioconda)
 
 ## Usage
-
 
 There are three python scripts available:
 
@@ -72,8 +71,7 @@ positional arguments:
 
 ## Input
 
-
-The python scripts can process files that were generated using the computational tools listed under [Assumption](#Assumption). Of course, in order to count heteroduplex molecules and sequencing reads the algorithm for heteroduplex detection had to be activated when generating HiFi reads.
+The python scripts can process files that were generated using the computational tools listed under [Assumption](#Assumption). Of course, in order to count heteroduplex molecules and sequencing reads the `--hd-finder` algorithm for heteroduplex detection had to be activated when generating HiFi reads.
 
 Inputs files can be:
 
@@ -87,7 +85,7 @@ Inputs files can be:
 
 ## Output
 
-The count scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
+The two heteroduplex count scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
 
 * `data` variable is a `str` that indicates data type and can be one of:
     1. `HiFi` with QV≥20 (≥99% predicted accuracy)
@@ -181,7 +179,7 @@ cat reads.json
 
 ### HiFi reads fastq.gz with CSV output
 
-The `hd_counter_from_fastq` script needs manual adjustment to switch the output format. Change the `json_out = True`  to `json_out = False` on `line 214` of the script using a text editor.
+The `hd_counter_from_fastq.py` script needs manual adjustment to switch the output format. Change the `json_out = True`  to `json_out = False` on `line 214` of the script using a text editor.
 
 ```
 count_heteroduplexes(infile, outfile, my_dict, json_out = False)
