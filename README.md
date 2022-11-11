@@ -90,24 +90,19 @@ Inputs files can be:
 
 The count scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
 
-1. `data` variable is a `str` that indicates data type and can be one of:
-
-    a. `HiFi` with QV≥20 (≥99% predicted accuracy)
-    b. `Other CCS` with QV<20 (<99% predicted accuracy)
-
-2. `description` variable is a `str` that can be one of:
-
-    a. `All ZMWs (DNA molecules)` - total number of ZMWs/DNA molecules 
-    b. `Heteroduplex ZMWs (DNA molecules)` - number of ZMWs/DNA molecules that tested positive for a heteroduplex 
-    c. `Proportion of heteroduplex ZMWs (%)` - `100 x ( 2b / 2a )` 
-    d. `Double stranded reads` - number of reads coming from a ZMW that tested negative for a heteroduplex and _ccs_ generates one consensus sequence for both DNA strand (i.e., double-stranded)
-    e. `Single stranded reads` - number of reads coming from a ZMW that tested positive for a heteroduplex _ccs_ splits the data on the fly to produce single-stranded CCS reads 
-    f. `Proportion single stranded reads (%)` - `100 x ( 2e / ( 2e + 2d ) )`
-
-3. `value` is either a `int` or a `float`:
-
-    a. `int` is a count
-    b. `float` is a percentage
+* `data` variable is a `str` that indicates data type and can be one of:
+    1. `HiFi` with QV≥20 (≥99% predicted accuracy)
+    2. `Other CCS` with QV<20 (<99% predicted accuracy)
+* `description` variable is a `str` that can be one of:
+    1. `All ZMWs (DNA molecules)` - total number of ZMWs/DNA molecules 
+    2. `Heteroduplex ZMWs (DNA molecules)` - number of ZMWs/DNA molecules that tested positive for a heteroduplex 
+    3. `Proportion of heteroduplex ZMWs (%)` - `100 x ( 2b / 2a )` 
+    4. `Double stranded reads` - number of reads coming from a ZMW that tested negative for a heteroduplex and _ccs_ generates one consensus sequence for both DNA strand (i.e., double-stranded)
+    5. `Single stranded reads` - number of reads coming from a ZMW that tested positive for a heteroduplex _ccs_ splits the data on the fly to produce single-stranded CCS reads 
+    6. `Proportion single stranded reads (%)` - `100 x ( 2e / ( 2e + 2d ) )`
+* `value` is either a `int` or a `float`:
+    1. `int` is a count
+    2. `float` is a percentage
 
 ## Examples
 
