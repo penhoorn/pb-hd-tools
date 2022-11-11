@@ -235,6 +235,6 @@ For data analyzed with the `--hd-finder` the header should contain:
 
 ### Why is the number of single stranded reads not double of the number heteroduplex ZMWs?
 
-...
+Whenever the `--hd-finder` algorithm detects a heteroduplex, it will run _ccs_ in by-strand mode and attempts to generate a HiFi read per DNA strand. Each strand has roughly half the number of passes over the molecule and less coverage to generate HiFi data. There will be individual strands with too little passes/coverage to generate HiFi data. So, not every heteroduplex ZMW will generate two single stranded HiFi reads.
 
 
