@@ -78,13 +78,12 @@ The python scripts can process files that were generated using the computational
 Inputs files can be:
 
 * `hd_counter_from_bam.py`
-
-    a.  hifi_reads.bam
-    b.  reads.bam
-
+    1.  hifi_reads.bam
+    2.  reads.bam
 * `hd_counter_from_fastq.py`
-
-    a.  hifi_reads.fastq.gz
+    1.  hifi_reads.fastq.gz
+* `hd_filter_from_fastq.py`
+    1. hifi_reads.fastq.gz
 
 ## Output
 
