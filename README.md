@@ -103,7 +103,7 @@ The two heteroduplex count scripts support two output formats either JSON or CSV
 
 ## Examples
 
-### All reads bam with JSON output
+### Count heteroduplexes in reads.bam with JSON output
 
 ```
 # count
@@ -177,7 +177,7 @@ cat reads.json
 ]
 ```
 
-### HiFi reads fastq.gz with CSV output
+### Count heteroduplexes in hifi_reads.fastq.gz with CSV output
 
 The `hd_counter_from_fastq.py` script needs manual adjustment to switch the output format. Change the `json_out = True`  to `json_out = False` on `line 214` of the script using a text editor.
 
@@ -208,6 +208,16 @@ Other CCS,Proportion heteroduplex ZMWs (%),0
 Other CCS,Double stranded reads,0
 Other CCS,Single stranded reads,0
 Other CCS,Proportion single stranded reads (%),0
+```
+
+### Filter out single stranded reads from hifi_reads.fastq.gz
+
+```
+# filter
+python hd_filter_from_fastq.py hifi_reads.fastq.gz filtered.hifi_reads.fastq
+
+# compress
+bgzip filtered.hifi_reads.fastq
 ```
 
 ## FAQ
