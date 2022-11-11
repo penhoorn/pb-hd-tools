@@ -1,7 +1,7 @@
 ## Introduction
 
 
-Python scripts to count the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
+Python scripts to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
 
 ### Disclaimer
 
@@ -35,30 +35,41 @@ This is true for output files of PacBio computational tools, including:
 ## Usage
 
 
-There are two python scripts available:
+There are three python scripts available:
 
-* `hd_counter_from_bam.py` - using unaligned BAM files as [input](#Input)
-* `hd_counter_from_fastq.py` - using compressed FASTQ files as [input](#Input)
+* `hd_counter_from_bam.py` - count heteroduplex molecules and by-strand HiFi reads using unaligned BAM files as [input](#Input)
+* `hd_counter_from_fastq.py` - count heteroduplex molecules and by-strand HiFi reads using compressed FASTQ files as [input](#Input)
+* `hd_filter_from_fastq.py` - filter out by-strand HiFi reads using compressed FASTQ files as [input](#Input)
 
-### Unaligned BAM files
+### Count from unaligned BAM files
 
 ```
 usage: python hd_counter_from_bam.py bam_filename output_filename
 
 positional arguments:
-  bam_filename      Unaligned BAM file
-  output_filename   JSON or CSV output file
+  bam_filename              Unaligned BAM file
+  output_filename           JSON or CSV output file
 
 ```
 
-### Compressed FASTQ files
+### Count from compressed FASTQ files
 
 ```
 usage: python hd_counter_from_fastq.py fqgz_filename output_filename
 
 positional arguments:
-  fqgz_filename     Compressed FASTQ input file
-  output_filename   JSON or CSV output file
+  fqgz_filename             Compressed FASTQ input file
+  output_filename           JSON or CSV output file
+```
+
+###  Filter from compressed FASTQ files
+
+```
+usage: python hd_filter_from_fastq.py fqgz_input_filename fq_output_filename
+
+positional arguments:
+  fqgz_input_filename       Compressed FASTQ input file
+  fq_output_filename        Filtered FASTQ output file
 ```
 
 ## Input
@@ -78,7 +89,7 @@ Inputs files can be:
 
 ***
 
-The scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
+The count scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
 
 1. `data` variable is a `str` that indicates data type and can be one of:
     a. `HiFi` with QV≥20 (≥99% predicted accuracy)
