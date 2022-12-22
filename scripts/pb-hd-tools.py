@@ -66,4 +66,5 @@ if args.filter:
     sys.exit("ERROR: filter heteroduplex reads from BAM input not (yet) supported")
   else:
     from filter import fastq as ff
-    ff.filter_heteroduplexes(args.infile, args.outfile)
+    print("Filtered output file:", ft.ext_change(args.outfile,'.fastq'))
+    ff.filter_heteroduplexes(args.infile, ft.ext_change(args.outfile,'.fastq'))
