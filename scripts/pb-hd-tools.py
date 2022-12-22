@@ -8,7 +8,7 @@ import json
 import gzip
 import pysam
 
-import from tools import filetype
+from tools import filetype as ft
 
 parser = argparse.ArgumentParser(
     prog="pb-hd-tools",
@@ -24,5 +24,6 @@ parser.add_argument("-m","--mask",action="store_true", help="Mask heteroduplex b
 
 args = parser.parse_args()
 
-is_bam = ifile(infile)
-print(is_bam)
+is_bam = ft.ifile(args.infile)
+is_json = ft.ofile(args.outfile)
+print(is_json)
