@@ -27,10 +27,23 @@ args = parser.parse_args()
 # print arguments to stdout
 print("Input file:", args.infile)
 print("Output file:", args.outfile)
-if args.filter:
-  print("Heteroduplex filter is active")
-if args.mask:
-  print("Heteroduplex base masking is active")
+
+# check i/o file extensions and print result to stdout
 is_bam = ft.ifile(args.infile)
 is_json = ft.ofile(args.outfile)
+if is_bam:
+  print("Input file is BAM format")
+else: 
+  print("Input file is FASTQ.GZ format")
+if is_json:
+  print("Output file is JSON format")
+else:
+  print("Output file is CSV format")
+
+# print options to stdout
+if args.filter:
+  print("Option -f/--filter: heteroduplex read filter is active")
+if args.mask:
+  print("Option -m/--mask: heteroduplex base masking is active")
+
 
