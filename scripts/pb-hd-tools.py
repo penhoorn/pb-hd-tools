@@ -8,7 +8,7 @@ import json
 import gzip
 import pysam
 
-# import hd-functions
+import functions
 
 parser = argparse.ArgumentParser(
     prog="pb-hd-tools",
