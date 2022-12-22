@@ -1,6 +1,6 @@
 ## Introduction
 
-script to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an `--hd-finder` algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
+Python script to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an `--hd-finder` algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
 
 ### Disclaimer
 
@@ -33,7 +33,7 @@ This is true for output files of PacBio computational tools, including:
 
 ## Usage
 
-There one script `pb-hd-tools.py` to run all functionality: counting, filtering, or masking. 
+There is one Python script `pb-hd-tools.py` to run all functionality: counting, filtering, or masking. 
 
 ```
 usage: pb-hd-tools.py [-h] [-f] [-m] infile outfile
