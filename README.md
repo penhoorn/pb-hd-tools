@@ -59,8 +59,8 @@ The script can process files that were generated using the computational tools l
 Inputs files can be:
 
 * BAM format:
-    1.  hifi_reads.bam
-    2.  reads.bam
+    1.  hifi_reads.bam + index (hifi_reads.bam.bai) file
+    2.  reads.bam + index (reads.bam.bai) file
 * FASTQ format:
     1.  hifi_reads.fastq.gz
 
