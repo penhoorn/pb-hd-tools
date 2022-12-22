@@ -7,3 +7,5 @@ import os
 import json
 import gzip
 import pysam
+
+import hd-functions
