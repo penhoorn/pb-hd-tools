@@ -4,3 +4,6 @@ import sys
 import getopt
 import os
 
+import json
+import gzip
+import pysam
