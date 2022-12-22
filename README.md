@@ -186,8 +186,14 @@ Other CCS,Proportion single stranded reads (%),0
 ### Filter out single stranded reads from hifi_reads.fastq.gz
 
 ```
-ToDo
+# count FASTQ.GZ input with CSV output and filter (-f/--filter)
+./pb-hd-tools.py -f \
+        input-hifi_reads.fastq.gz \
+        output-hifi_reads.csv
+        
 ```
+
+__IMPORTANT!!!__ The script will create an `output-hifi_reads.fastq` output file with all heteroduplex reads filtered out. 
 
 ### Mask heteroduplex bases from read.bam
 
