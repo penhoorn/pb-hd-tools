@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 def ifile(m):
   if m.lower().endswith('.bam'):
@@ -15,3 +16,8 @@ def ofile(m):
     return False
   else:
     sys.exit("ERROR: output file must either have .json or .csv extension")
+
+def ext_change(filename, ext):
+  p = Path(filename)
+  p.rename(p.with_suffix(ext))
+  return p
