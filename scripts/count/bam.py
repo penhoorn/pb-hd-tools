@@ -187,8 +187,8 @@ try:
 except IndexError as ie:
     raise SystemError("Error: Specify output fasta file name")
 
-print("Input file:", infile)
-print("Output file:", outfile)
+# print("Input file:", infile)
+# print("Output file:", outfile)
 
 # data dictionary
 my_dict = {
