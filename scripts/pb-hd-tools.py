@@ -9,6 +9,8 @@ import gzip
 import pysam
 
 from tools import filetype as ft
+from count import fastq as fq
+from count import bam as bm
 
 parser = argparse.ArgumentParser(
     prog="pb-hd-tools.py",
