@@ -24,6 +24,13 @@ parser.add_argument("-m","--mask",action="store_true", help="Mask heteroduplex b
 
 args = parser.parse_args()
 
+# print arguments to stdout
+print("Input file:", args.infile)
+print("Output file:", args.outfile)
+if args.filter:
+  print("Heteroduplex filter is active")
+if args.mask:
+  print("Heteroduplex base masking is active")
 is_bam = ft.ifile(args.infile)
 is_json = ft.ofile(args.outfile)
 
