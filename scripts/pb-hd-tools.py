@@ -48,4 +48,14 @@ if args.filter:
 if args.mask:
   print("Option -m/--mask: heteroduplex base masking is active")
 
+# data dictionary
+my_dict = {
+  'hifi': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0},
+  'occs': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0}
+}
 
+# count heteroduplexes (default)
+if is_bam:
+  bm.count_heteroduplexes(args.infile, args.outfile, my_dict, json_out = is_json)
+else:
+  fq.count_heteroduplexes(args.infile, args.outfile, my_dict, json_out = is_json)
