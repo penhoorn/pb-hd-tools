@@ -59,3 +59,11 @@ if is_bam:
   bm.count_heteroduplexes(args.infile, args.outfile, my_dict, json_out = is_json)
 else:
   fq.count_heteroduplexes(args.infile, args.outfile, my_dict, json_out = is_json)
+
+# filter out heteroduplex reads (-f/--filter option)
+if args.filter:
+  if is_bam:
+    sys.exit("ERROR: filter heteroduplex reads from BAM input not (yet) supported")
+  else:
+    from filter import fastq as ff
+    ff.filter_heteroduplexes(args.infile, args.outfile)
