@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import sys
 import os
 import pysam
@@ -175,30 +173,3 @@ def count_heteroduplexes(infile, outfile, my_dict, json_out = True):
     write_json(my_dict, outfile)
   else:
     write_csv(my_dict, outfile)
-    
-    
-try:
-    infile = sys.argv[1]
-except IndexError as ie:
-    raise SystemError("Error: Specify input fastq file name\n")
-
-if not os.path.exists(infile):
-    raise SystemError("Error: File does not exist\n")
-try:
-    outfile = sys.argv[2]
-except IndexError as ie:
-    raise SystemError("Error: Specify output fasta file name")
-
-print("Input file:", infile)
-print("Output file:", outfile)
-
-# data dictionary
-my_dict = {
-  'hifi': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0},
-  'occs': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0}
-}
-# print(my_dict)
-
-# run functions
-count_heteroduplexes(infile, outfile, my_dict, json_out = True)
-print(my_dict)

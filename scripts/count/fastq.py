@@ -1,15 +1,14 @@
-#!/usr/bin/env python3
-
 import sys
 import os
 import json
 import gzip
 
-# process 4 standard fastq lines, see: https://www.biostars.org/p/317524/
+# generic: process 4 standard fastq lines, see: https://www.biostars.org/p/317524/
 def process(lines=None):
     ks = ['name', 'sequence', 'optional', 'quality']
     return {k: v for k, v in zip(ks, lines)}
 
+# generic: determine read type (ds_ccs or ss_ccs)
 def get_ccs_read_type(record):
   # get read id
   qname = record['name'].decode('UTF-8')
@@ -24,6 +23,7 @@ def get_ccs_read_type(record):
     # return ss_ccs (single stranded ccs) as read type
     return('ss_ccs')
 
+# generic: retrieve zmw id 
 def get_zmw_id(record):
   # get read id
   qname = record['name'].decode('UTF-8')
@@ -34,6 +34,7 @@ def get_zmw_id(record):
   # return zmw id (2nd element in list)
   return(elements[1])
 
+# hd-count: update counts in global dictionary
 def update_counts(my_dict, record, zmws, key = 'hifi'):
   # get read type
   tp = get_ccs_read_type(record)
@@ -66,6 +67,7 @@ def update_counts(my_dict, record, zmws, key = 'hifi'):
   # return updated dictionary
   return(my_dict)
 
+# hd-count: write global dictionary as json formatted output file
 def write_json(my_dict, outfile):
   # hifi data
   if my_dict['hifi']['hd'] == 0:
@@ -113,6 +115,7 @@ def write_json(my_dict, outfile):
   with open(outfile, "w") as of:
       of.write(json_string)
   
+# hd-count: write global dictionary as csv output file
 def write_csv(my_dict, outfile):
   # hifi data
   if my_dict['hifi']['hd'] == 0:
@@ -152,6 +155,7 @@ def write_csv(my_dict, outfile):
     of.write('Other CCS,Single stranded reads,' + str(my_dict['occs']['ss']) + '\n')
     of.write('Other CCS,Proportion single stranded reads (%),' + str(occs_rd_per) + '\n')
 
+# hd-count: main function to count heteroduplex ZMWs and by-strand reads
 def count_heteroduplexes(infile, outfile, my_dict, json_out = True):
   n = 4
   # work with compressed fastq input file
@@ -187,29 +191,3 @@ def count_heteroduplexes(infile, outfile, my_dict, json_out = True):
     write_json(my_dict, outfile)
   else:
     write_csv(my_dict, outfile)
-
-
-try:
-    infile = sys.argv[1]
-except IndexError as ie:
-    raise SystemError("Error: Specify input fastq file name\n")
-
-if not os.path.exists(infile):
-    raise SystemError("Error: File does not exist\n")
-try:
-    outfile = sys.argv[2]
-except IndexError as ie:
-    raise SystemError("Error: Specify output fasta file name")
-
-print("Input file:", infile)
-print("Output file:", outfile)
-
-# data dictionary
-my_dict = {
-  'hifi': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0},
-  'occs': {'zm': 0, 'hd': 0, 'ds': 0, 'ss': 0}
-}
-
-# run functions
-count_heteroduplexes(infile, outfile, my_dict, json_out = True)
-print(my_dict)

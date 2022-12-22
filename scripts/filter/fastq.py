@@ -68,22 +68,5 @@ def filter_heteroduplexes(infile, outfile):
           lines = []
           continue
 
-try:
-    infile = sys.argv[1]
-except IndexError as ie:
-    raise SystemError("Error: Specify input fastq file name\n")
-
-if not os.path.exists(infile):
-    raise SystemError("Error: File does not exist\n")
-try:
-    outfile = sys.argv[2]
-except IndexError as ie:
-    raise SystemError("Error: Specify output fastq file name")
-
-print("Input file:", infile)
-print("Output file:", outfile)
-
-# run 
-filter_heteroduplexes(infile, outfile)
 
 

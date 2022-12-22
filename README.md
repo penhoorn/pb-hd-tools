@@ -1,10 +1,10 @@
 ## Introduction
 
-Python scripts to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an `--hd-finder` algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
+script to count and filter the number of heteroduplex molecules and sequencing reads. Heteroduplex DNA molecules can occur during the annealing step of PCR, when non-complementary (but highly similar) DNA strands come together. [PacBio's _ccs_ tool (starting with v6.3.0)](https://ccs.how/faq/mode-heteroduplex-filtering.html) has an `--hd-finder` algorithm to detect heteroduplexes during HiFi read generation. The scripts here provide a simplified report.
 
 ### Disclaimer
 
-These scripts are not official PacBio products and come with no warranty. 
+These Python scripts are not official PacBio products and come with no warranty. 
 
 ## Pre-requisites
 
@@ -19,6 +19,7 @@ Python libraries:
 * [sys](https://docs.python.org/3/library/sys.html)
 * [os](https://docs.python.org/3/library/os.html)
 * [json](https://docs.python.org/3/library/json.html)
+* [argparse](https://docs.python.org/3/library/argparse.html)
 
 ### Assumption
 
@@ -32,60 +33,40 @@ This is true for output files of PacBio computational tools, including:
 
 ## Usage
 
-There are three python scripts available:
-
-* `hd_counter_from_bam.py` - count heteroduplex molecules and by-strand HiFi reads using unaligned BAM files as [input](#Input)
-* `hd_counter_from_fastq.py` - count heteroduplex molecules and by-strand HiFi reads using compressed FASTQ files as [input](#Input)
-* `hd_filter_from_fastq.py` - filter out by-strand HiFi reads using compressed FASTQ files as [input](#Input)
-
-### Count from unaligned BAM files
+There one script `pb-hd-tools.py` to run all functionality: counting, filtering, or masking. 
 
 ```
-usage: python hd_counter_from_bam.py bam_filename output_filename
+usage: pb-hd-tools.py [-h] [-f] [-m] infile outfile
+
+A set of tools to count, filter and mask heteroduplex molecules and bases in PacBio CCS data
 
 positional arguments:
-  bam_filename              Unaligned BAM file
-  output_filename           JSON or CSV output file
+  infile        Input file (either BAM or FASTQ.GZ)
+  outfile       Output file (either JSON or CSV)
 
-```
+optional arguments:
+  -h, --help    show this help message and exit
+  -f, --filter  Filter out heteroduplex data (i.e., single-strand ccs reads)
+  -m, --mask    Mask heteroduplex bases
 
-### Count from compressed FASTQ files
-
-```
-usage: python hd_counter_from_fastq.py fqgz_filename output_filename
-
-positional arguments:
-  fqgz_filename             Compressed FASTQ input file
-  output_filename           JSON or CSV output file
-```
-
-###  Filter from compressed FASTQ files
-
-```
-usage: python hd_filter_from_fastq.py fqgz_input_filename fq_output_filename
-
-positional arguments:
-  fqgz_input_filename       Compressed FASTQ input file
-  fq_output_filename        Filtered FASTQ output file
+Thanks for using pb-hd-tools.py! :)
 ```
 
 ## Input
 
-The python scripts can process files that were generated using the computational tools listed under [Assumption](#Assumption). Of course, in order to count heteroduplex molecules and sequencing reads the `--hd-finder` algorithm for heteroduplex detection had to be activated when generating HiFi reads.
+The script can process files that were generated using the computational tools listed under [Assumption](#Assumption). Of course, in order to count heteroduplex molecules and sequencing reads the `--hd-finder` algorithm for heteroduplex detection had to be activated when generating HiFi reads.
 
 Inputs files can be:
 
-* `hd_counter_from_bam.py`
-    1.  hifi_reads.bam
-    2.  reads.bam
-* `hd_counter_from_fastq.py`
+* BAM format:
+    1.  hifi_reads.bam + index (hifi_reads.bam.bai) file
+    2.  reads.bam + index (reads.bam.bai) file
+* FASTQ format:
     1.  hifi_reads.fastq.gz
-* `hd_filter_from_fastq.py`
-    1. hifi_reads.fastq.gz
 
 ## Output
 
-The two heteroduplex count scripts support two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
+The count functionality supports two output formats either JSON or CSV. Both formats have the similar content. There are three variables, which form the properties in a JSON object and the header of the CSV file:
 
 * `data` variable is a `str` that indicates data type and can be one of:
     1. `HiFi` with QV≥20 (≥99% predicted accuracy)
@@ -106,8 +87,8 @@ The two heteroduplex count scripts support two output formats either JSON or CSV
 ### Count heteroduplexes in reads.bam with JSON output
 
 ```
-# count
-python hd_counter_from_bam.py \
+# count BAM file input and json output
+./pb-hd-tools.py \
         reads.bam \
         reads.json
         
@@ -179,17 +160,9 @@ cat reads.json
 
 ### Count heteroduplexes in hifi_reads.fastq.gz with CSV output
 
-The `hd_counter_from_fastq.py` script needs manual adjustment to switch the output format. Change the `json_out = True`  to `json_out = False` on `line 214` of the script using a text editor.
-
 ```
-count_heteroduplexes(infile, outfile, my_dict, json_out = False)
-```
-
-Upon saving the edited script you can run it.
-
-```
-# count
-python hd_counter_from_fastq \
+# count FASTQ.GZ input and CSV output
+./pb-hd-tools.py \
         hifi_reads.fastq.gz \
         hifi_reads.csv
         
@@ -213,11 +186,13 @@ Other CCS,Proportion single stranded reads (%),0
 ### Filter out single stranded reads from hifi_reads.fastq.gz
 
 ```
-# filter
-python hd_filter_from_fastq.py hifi_reads.fastq.gz filtered.hifi_reads.fastq
+ToDo
+```
 
-# compress
-bgzip filtered.hifi_reads.fastq
+### Mask heteroduplex bases from read.bam
+
+```
+ToDo
 ```
 
 ## FAQ
