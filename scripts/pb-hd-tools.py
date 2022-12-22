@@ -26,4 +26,4 @@ args = parser.parse_args()
 
 is_bam = ft.ifile(args.infile)
 is_json = ft.ofile(args.outfile)
-print(is_json)
+
